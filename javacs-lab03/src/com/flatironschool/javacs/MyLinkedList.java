@@ -85,7 +85,26 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public void add(int index, E element) {
-		// TODO: fill this in
+		size = size + 1;
+		if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+		int cur_index = 0;
+		if (index == cur_index) {
+			head = new Node(element, head);
+		}
+		else{
+			Node new_node = new Node(element);
+		for (Node cur_node = head; cur_node != null; cur_index++, cur_node = cur_node.next ){
+			if (cur_index == index -1){
+				Node old = cur_node.next;
+				cur_node.next = new_node;
+				new_node.next = old;
+			}
+			}
+		
+		}
+		
 	}
 
 	@Override
@@ -146,7 +165,14 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public int indexOf(Object target) {
-		// TODO: fill this in
+		int index = 0;
+		
+		for (Node current = head; current != null; current = current.next, index++){
+			if (equals(current.cargo,target)){
+				return index;
+				}
+			}
+		
 		return -1;
 	}
 
@@ -201,13 +227,53 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public boolean remove(Object obj) {
-		// TODO: fill this in
+		
+		int cur_index = 0;
+		if (equals(head.cargo,obj)) {
+			head = head.next;
+			size = size - 1;
+			return true;
+		}
+		else{
+		for (Node cur_node = head; cur_node != null; cur_index++, cur_node = cur_node.next ){
+			if (equals(cur_node.cargo,obj)){
+				Node before = getNode(cur_index-1);		
+				before.next = cur_node.next ;
+				size = size - 1;
+				return true;
+			}
+			
+		}
+		}
+		
 		return false;
 	}
+		
 
 	@Override
 	public E remove(int index) {
-		// TODO: fill this in
+		size = size - 1;
+		if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+		int cur_index = 0;
+		if (index == cur_index) {
+			head = head.next;
+			return head.cargo;
+		}
+		else{
+		for (Node cur_node = head; cur_node != null; cur_index++, cur_node = cur_node.next ){
+			if (cur_index == index -1){
+				Node old = cur_node.next;
+				Node new_pointer = old.next;
+				cur_node.next = new_pointer;
+				return old.cargo;
+			}
+			}
+		
+		}
+		
+	
 		return null;
 	}
 
